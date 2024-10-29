@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+            <record id="stages_variable_new" model="stages.transit">
+            <field name="name">OUVERT</field>
+            <field name="number">10</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_nav" model="stages.transit">
+            <field name="name">ATTENTE NAVIRE</field>
+            <field name="number">20</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_rvc_besc" model="stages.transit">
+            <field name="name">ATTENTE RVC ET BESC</field>
+            <field name="number">30</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_rvc" model="stages.transit">
+            <field name="name">ATTENTE RVC</field>
+            <field name="number">40</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_besc" model="stages.transit">
+            <field name="name">ATTENTE BESC</field>
+            <field name="number">50</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_besc_purchase" model="stages.transit">
+            <field name="name">BESC A ACHETER</field>
+            <field name="number">60</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_2_rvc" model="stages.transit">
+            <field name="name">ATTENTE 2eme RVC</field>
+            <field name="number">70</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_cpy_bl" model="stages.transit">
+            <field name="name">ATTENTE COPIE BL</field>
+            <field name="number">80</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_rvc_cpy_bl" model="stages.transit">
+            <field name="name">ATTENTE RVC ET COPIE BL </field>
+            <field name="number">90</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_fact_fret_rvc" model="stages.transit">
+            <field name="name">ATTENTE FACTURE FRET ET RVC</field>
+            <field name="number">100</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_att_rvc_2_page_fact" model="stages.transit">
+            <field name="name">ATTENTE RVC ET 2eme PAGE FACTURE </field>
+            <field name="number">101</field>
+            <field name="stages">transit</field>
+        </record>
+
+         <record id="stages_variable_validate_rvc" model="stages.transit">
+            <field name="name">VALIDE ET ATTENTE RVC</field>
+            <field name="number">102</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_validate_besc" model="stages.transit">
+            <field name="name">VALIDE ET ATTENTE BESC</field>
+            <field name="number">103</field>
+            <field name="stages">transit</field>
+        </record>
+         <record id="stages_variable_validate" model="stages.transit">
+            <field name="name">VALIDE</field>
+            <field name="number">104</field>
+            <field name="stages">transit</field>
+        </record>
+        <record id="stages_variable_in_transit" model="stages.transit">
+            <field name="name">EN COURS</field>
+            <field name="number">105</field>
+            <field name="stages">transit</field>
+        </record>
+
+        <record id="stages_variable_done" model="stages.transit">
+            <field name="name">TERMINE</field>
+            <field name="number">106</field>
+            <field name="stages">transit</field>
+        </record>
+
+    </data>
+</odoo>

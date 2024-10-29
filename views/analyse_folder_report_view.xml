@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_transit_folder_report_pivot" model="ir.ui.view">
+         <field name="name">transit.folder.report.pivot</field>
+         <field name="model">folder.transit</field>
+         <field name="arch" type="xml">
+            <pivot string="ETAT DES DOSSIERS PAR CLIENT" disable_linking="True">
+                 <field name="customer_id" type="row"/>
+                 <field name="stage_id" type="col"/>
+             </pivot>
+         </field>
+    </record>
+    <record id="view_transit_folder_report_graph" model="ir.ui.view">
+         <field name="name">transit.folder.report.graph</field>
+         <field name="model">folder.transit</field>
+         <field name="arch" type="xml">
+             <graph string="GRAPHE SUIVI DOSSIER">
+                 <field name="customer_id"/>
+                 <field name="amount_purchased" type="measure"/>
+             </graph>
+         </field>
+    </record>
+     <!-- Custom reports (aka filters) -->
+    <record id="action_account_invoice_report_transit_folder" model="ir.actions.act_window">
+        <field name="name">STATISTIQUE DES DOSSIERS</field>
+        <field name="res_model">folder.transit</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="context"></field>
+        <field name="search_view_id" ref="view_transit_folder_filter"/>
+        <field name="help">Depuis ce Tableau de Bord vous pouvez voir toutes les information que vous souhaitez</field>
+    </record>
+     <menuitem name="Dossiers" action="action_account_invoice_report_transit_folder" id="menu_action_transit_invoice_report_all" parent="menu_report_id" sequence="1"/>
+
+    </data>
+</odoo>

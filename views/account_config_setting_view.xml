@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="view_transit_currency_config_settings_inherit" model="ir.ui.view">
+            <field name="name">Transit.settings</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="20"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form[@class='oe_form_configuration']" position="inside">
+                    <div class="app_settings_block" data-string="Transit" string="Transit" data-key="transit_invoice">
+                       <h2>Installation du Module Shipping</h2>
+<!--                        <div class="row mt16 o_settings_container" id="shipping_settings">-->
+<!--                            <div class="col-12 col-lg-6 o_setting_box" id="shipping_module_id">-->
+<!--                                <div class="o_setting_left_pane">-->
+<!--                                    <field name="module_inov_shipping"/>-->
+<!--                                </div>-->
+<!--                                <div class="o_setting_right_pane">-->
+<!--                                    <label for="o_setting_left_pane" string="Shipping LMC"/>-->
+<!--                                    <div class="text-muted">-->
+<!--                                        Manage Shipping Folder-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                       <h2>Installation du Module Acconage</h2>
+<!--                        <div class="row mt16 o_settings_container" id="acconage_settings">-->
+<!--                            <div class="col-12 col-lg-6 o_setting_box" id="acconage_module_id">-->
+<!--                                <div class="o_setting_left_pane">-->
+<!--&lt;!&ndash;                                    <field name="module_lmc_acconage"/>&ndash;&gt;-->
+<!--                                </div>-->
+<!--                                <div class="o_setting_right_pane">-->
+<!--                                    <label for="o_setting_left_pane" string="Acconage LMC"/>-->
+<!--                                    <div class="text-muted">-->
+<!--                                        Manage Acconage Folder-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="action_transit_config" model="ir.actions.act_window">
+            <field name="name">Configuration</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'transit_invoice'}</field>
+        </record>
+
+        <menuitem id="menu_transit_config" name="Settings" parent="transit_invoice.menu_configuration_id"
+            sequence="0" action="action_transit_config" groups="base.group_system"/>
+
+    </data>
+</odoo>

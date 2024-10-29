@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+          <template id="account_invoices_folder_transit_placam_document">
+        <t t-call="web.external_layout">
+
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+         <div class="col-5 offset-7">
+            <span t-if="o.date_invoice">
+                <strong > Douala, le  </strong><span t-field="o.date_invoice"/>
+            </span>
+        </div>
+        <div class=" col-5">
+            <div t-if="o.transit_id">
+                <strong>Dossier N° :</strong>
+                <span  t-field="o.name"/>
+            </div>
+        </div>
+
+        <div class="col-5 offset-7">
+
+            <div  style="border: 2px solid #000;">
+                <div t-if="o.partner_id">DOIT: <span t-field="o.partner_id"/></div>
+                <div t-if="o.partner_id.street"> BP: <span t-field="o.partner_id.street"/></div>
+                <div t-if="o.partner_id.phone"> Tel: <span t-field="o.partner_id.phone"/></div>
+                <div t-if="o.partner_id.nui"> N.U.I: <span t-field="o.partner_id.nui"/></div>
+                <div t-if="o.partner_id.rc"> RCCM: <span t-field="o.partner_id.rc"/></div>
+            </div>
+        </div>
+        <div t-if="o.number_d">
+            <strong>Facture</strong>
+            <span t-field="o.number_d"/>
+        </div >
+        <div>
+
+            <table style="width:100%;margin:3mm auto 0;padding:0px;border: 2px solid #000;font-family: 'arial';font-size:small;">
+
+                <thead>
+                    <tr>
+                        <th style="border-right: 2px solid #000; padding: 4px; text-align: center;">Désignation</th>
+                        <th  style="border-right: 2px solid #000; padding: 4px; text-align: center;">Nombre de Tcs</th>
+                        <th  style="border-right: 2px solid #000; padding: 4px;">Montant HT</th>
+                        <th  style="border-right: 2px solid #000; padding: 4px;">TVA</th>
+                        <th  style="border-right: 2px solid #000; padding: 4px;">Montant TTC</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_debours_tbody">
+                   <t t-set="total_ht" t-value="0.0"/>
+                    <t t-set="total_ttc" t-value="0.0"/>
+                    <tr t-foreach="o.invoice_line_ids" t-as="l">
+                       <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;" ><span t-field="l.product_id"/></td>
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;"><span t-field="l.quantity"/></td>
+                            <!-- <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                                <span t-field="l.price_unit"/>
+                            </td> -->
+                            <t t-set="total_ht" t-value="l.price_subtotal+total_ht"/>
+                            <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                                <span t-field="l.price_subtotal"/>
+                            </td>
+
+                            <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                                <span t-field="l.price_tax"/>
+                            </td>
+                            <t t-set="total_ttc" t-value="l.price_total+total_ttc"/>
+                            <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                                <span t-field="l.price_total"/>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="col-md-2"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                            TOTAL
+                        </td>
+                        <td class="col-md-2" align="left"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                        </td>
+                        <td class="col-md-2" align="left"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                        </td>
+                        <td class="col-md-2" align="left"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                            <span t-esc="total_ttc" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <br></br>
+            <br></br>
+            <div t-if="o.date_op">
+                <strong>Date de l'opération:</strong>
+                <span  t-field="o.date_op"/>
+            </div>
+            <br></br>
+            <br></br>
+            <div t-if="o.transit_id.package_ids" class="text-left">
+                <table>
+                    <tr>
+                        <td>Type de colis</td>
+                        <td>Numero Conteneur</td>
+                    </tr>
+                    <tr t-foreach="o.transit_id.package_ids" t-as="line">
+                        <td>
+                            <span class="text-right" t-field="line.package_type_id" />
+                        </td>
+                        <td>
+                            <span class="text-right" t-field="line.name" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br></br>
+            <br></br>
+            <p style="font-family: 'arial';font-size:large;">
+                <strong style="text-decoration:underline;">Arrêter de la présente facture à la somme de </strong>
+                <span t-esc="o.get_amount_letter()"/>
+            </p>
+            <br></br>
+            <br></br>
+            <div class="text-right" style="font-family: 'arial';font-size:large; text-decoration:underline;">
+                <strong>
+                Pour LMC Sarl
+                </strong>
+            </div>
+        </div>
+    </t>
+
+    </template>
+
+    <template id="account_invoice_folder_placam">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="transit_invoice.account_invoices_folder_transit_placam_document" />
+            </t>
+        </t>
+    </template>
+
+    </data>
+</odoo>

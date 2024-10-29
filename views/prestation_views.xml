@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+          <!-- INVOICE TRANSIT -->
+        <record model="ir.ui.view" id="transit_invoice_tree_view">
+            <field name="name">invoice.transit.tree.view</field>
+            <field name="model">invoice.transit</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Line">
+                    <field name="vendor_id"/>
+                    <field name="package"/>
+                    <field name="weighty_all"/>
+                    <field name="uom_total_id"/>
+                    <field name="assurance" sum="Total assurance"/>
+                    <field name="chiffr_xaf_take" sum="Total CAF"/>
+                    <field name="folder_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+         <record id="invoice_transit_supplier_form" model="ir.ui.view">
+            <field name="name">transit.invoice.supplier.form</field>
+            <field name="model">invoice.transit</field>
+            <field name="arch" type="xml">
+                <form string="Vendor Invoice">
+                <sheet string="Vendor Invoice">
+                    <field name="currency_id" invisible="1"/>
+
+                    <div class="oe_title">
+                        <label for="folder_id" />
+                        <h1>
+                            <field name="folder_id" domain="[('number','&lt;',106)]" options="{'no_create': True, 'no_open': True}"/>
+                        </h1>
+                     </div>
+                    <h1>
+
+                    </h1>
+                    <group>
+                        <group>
+                            <field string="Fournisseur" name="vendor_id"
+                              widget="res_partner_many2one"
+                              context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1, 'default_is_company': True, 'show_vat': True}"/>
+                            <field name="foreign_currency_id" options="{'no_create': True, 'no_open': True}" />
+                            <field name="total_fac_fob"/>
+                            <field name="total_fac_fret"/>
+                        </group>
+                        <group string="Conteneur">
+                            <field name="package"/>
+                            <field name="num_package"/>
+                            <field name="weighty_all"/>
+                            <field name="uom_total_id"/>
+                            <field name="currency_rate" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Article transportes">
+                            <field  name="line_ids">
+                                <tree string="Order Line">
+                                    <field name="ref"/>
+                                    <field name="position_tarif"/>
+                                    <field name="product_id"/>
+                                    <field name="weight_brut_qty" sum="Total qty"/>
+                                    <field name="weight_net_qty" sum="Total net"/>
+                                    <field name="invoice_id" invisible="1"/>
+                                    <field name="chiffr_xaf" sum="Total CAF"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="assurance" readonly="1"/>
+                                    <field name="chiffr_xaf_take" class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                            >
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <!-- <div class="o_attachment_preview" attrs="{'invisible': ['|',('type', '!=', 'in_invoice'),('state', '!=', 'draft')]}" />
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div> -->
+                </form>
+            </field>
+        </record>
+         <record id="view_transit_invoice_report_pivot" model="ir.ui.view">
+         <field name="name">transit.invoice.report.pivot</field>
+         <field name="model">invoice.transit</field>
+         <field name="arch" type="xml">
+            <pivot string="Suivi de l'assurance" disable_linking="True">
+                 <field name="vendor_id" type="col"/>
+                 <field name="folder_id" type="row"/>
+                 <field name="assurance" type="measure"/>
+                 <field name="chiffr_xaf_take" type="measure" invisible="1"/>
+             </pivot>
+         </field>
+        </record>
+        <record id="view_transit_folder_report_graph" model="ir.ui.view">
+            <field name="name">transit.invoice.report.graph</field>
+            <field name="model">invoice.transit</field>
+            <field name="arch" type="xml">
+                <graph string="GRAPHE SUIVI ASSURANCE">
+                    <field name="vendor_id" type="col"/>
+                    <field name="folder_id" type="row"/>
+                    <field name="assurance" type="measure"/>
+                    <field name="chiffr_xaf_take" type="measure" invisible="1"/>
+                    <field name="package" type="measure" invisible="1"/>
+                </graph>
+            </field>
+        </record> -->
+        <record id="view_transit_invoice_filter" model="ir.ui.view">
+        <field name="name">invoice.transit.search</field>
+        <field name="model">invoice.transit</field>
+            <field name="arch" type="xml">
+                <search string="Recherche Invoice Transit">
+                    <field name="vendor_id" filter_domain="[('vendor_id','ilike',self)]"/>
+                    <field name="package"/>
+                    <group expand="0" string="Group By">
+                        <filter name="package_name" string="Package" domain="[]" context="{'group_by':'package'}"/>
+                         <filter name="vendor_name" string="Fournisseur" domain="[]" context="{'group_by':'vendor_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_transit_invoice" model="ir.actions.act_window">
+        <field name="name">Invoice Transit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">invoice.transit</field>
+        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="search_view_id" ref="view_transit_invoice_filter"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+             Invoice.
+            </p><p>
+
+            </p>
+        </field>
+      </record>
+
+      <!-- <menuitem
+            name="Declaration Provisoire"
+            action="action_transit_invoice"
+            id="menu_transit_invoice_id" parent="transit_invoice.menu_service_id" groups="transit_invoice.group_transit_declarant"
+            sequence="0" /> -->
+
+        <!-- Add you code here -->
+        <record model="ir.ui.view" id="transit_prestation_tree_view">
+            <field name="name">transit.prestation.tree.view</field>
+            <field name="model">prestation.transit</field>
+            <field name="arch" type="xml">
+                <tree string="Prestation Line">
+                <field name="name"/>
+                <field name="product_id" invisible="1"/>
+                <field name="type_service"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="transit_prestation_form_form">
+       <field name="name">transit.prestation.form.view</field>
+       <field name="model">prestation.transit</field>
+       <field name="arch" type="xml">
+        <form string ="Prestation de Transit">
+		 	<sheet>
+                <group >
+                    <group>
+                        <field name="name"/>
+                        <field name="type_service"/>
+                    </group>
+                    <group>
+                        <field name="product_id"  options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                     <field name="caution"/>
+                    <field name="taux"/>
+                </group>
+            </sheet>
+        </form>
+       </field>
+     </record>
+    <record id="view_transit_prestation_filter" model="ir.ui.view">
+        <field name="name">transit.prestation.search</field>
+        <field name="model">prestation.transit</field>
+        <field name="arch" type="xml">
+            <search string="Recherche Prestation Transit">
+                <field name="name" string="Nom de la Prestation" filter_domain="[('name','ilike',self)]"/>
+                <group expand="0" string="Group By">
+                    <filter name="prestation_type" string="Types" domain="[]" context="{'group_by':'type_service'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_transit_prestation" model="ir.actions.act_window">
+        <field name="name">Prestations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">prestation.transit</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_transit_prestation_filter"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+             Prestation.
+            </p><p>
+
+            </p>
+        </field>
+      </record>
+        <menuitem
+            name="Prestation"
+            action="action_transit_prestation"
+            id="menu_transit_prestation_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            sequence="11" />
+
+        <record model="ir.ui.view" id="transit_order_tree_view">
+            <field name="name">product.transit.tree.view</field>
+            <field name="model">product.transit</field>
+            <field name="arch" type="xml">
+                <tree string="Order Line">
+                    <field name="ref"/>
+                    <field name="position_tarif"/>
+                    <field name="product_id"/>
+                    <field name="weight_brut_qty" sum="Total qty"/>
+                    <field name="weight_net_qty" sum="Total net"/>
+                    <field name="invoice_id" invisible="1"/>
+                    <field name="chiffr_xaf" sum="Total CAF"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="transit_order_form_view">
+            <field name="name">transit.order.form.view</field>
+            <field name="model">product.transit</field>
+            <field name="arch" type="xml">
+            <form string ="Product Transit">
+                <sheet>
+                    <group >
+                        <group string="Commande">
+                            <field name="regime"/>
+                            <field name="origin"/>
+                            <field name="ref"/>
+                            <field name="ref" invisible="1"/>
+                        </group>
+                        <group string="Produits">
+                            <field name="product_id"/>
+                            <field name="nbre_package"/>
+                            <field name="position_tarif"/>
+                            <field name="weight_brut_qty"/>
+                            <field name="uom_brut_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="weight_net_qty"/>
+                            <field name="uom_net_id" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group string="Montants Fret et FOB">
+                            <field name="foreign_currency_id"/>
+                            <field name="fac_fob"/>
+                            <field name="fac_fret"/>
+                            <field name="fac_cfr"/>
+                        </group>
+                        <group string="Chiffre d'Affaire">
+                            <field name="assurance"/>
+                            <field name="chiffr_xaf"/>
+                            <field name="chiffr_xaf_take"/>
+                            <field name="invoice_id" invisible="1"/>
+                            <field name="company_currency_id" invisible="1"/>
+                            <!-- <field name="currency_id" /> -->
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Note">
+                            <field name="file_upload" filename="file_invoice" string="Piece Jointe" icon="fa-file" />
+                            <field name="file_invoice" invisible="1" />
+                            <field name="description"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+            </field>
+        </record>
+
+       <record id="activity_inherit_form" model="ir.ui.view">
+           <field name="name">activity.inherit.form</field>
+           <field name="model">mail.activity</field>
+           <field name="inherit_id" ref="mail.mail_activity_view_form_popup" />
+           <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="model_transit_id"/>
+            </xpath>
+            <xpath expr="//button[@name='action_close_dialog']" position="attributes">
+                <attribute name="groups">transit_invoice.group_transit_manager,transit_invoice.group_acconage_manager,transit_invoice.group_shipping_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_done_schedule_next']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+
+           </field>
+       </record>
+        <record id="activity_type_inherit_form" model="ir.ui.view">
+           <field name="name">activity.type.inherit.form</field>
+           <field name="model">mail.activity.type</field>
+           <field name="inherit_id" ref="mail.mail_activity_type_view_form" />
+           <field name="arch" type="xml">
+            <xpath expr="//field[@name='summary']" position="after">
+                <field name="responsible_id"/>
+                <field name="stages"/>
+            </xpath>
+           </field>
+       </record>
+        <record id="activity_type_inherit_tree" model="ir.ui.view">
+           <field name="name">activity.type.inherit.tree</field>
+           <field name="model">mail.activity.type</field>
+           <field name="inherit_id" ref="mail.mail_activity_type_view_tree" />
+           <field name="arch" type="xml">
+            <xpath expr="//field[@name='summary']" position="after">
+                <field name="responsible_id"/>
+                <field name="stages"/>
+            </xpath>
+           </field>
+       </record>
+
+       <record id="action_validate_task_tree" model="ir.actions.server">
+            <field name="name">Validation Taches Multiples</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="mail.model_mail_activity"/>
+            <field name="binding_model_id" ref="mail.model_mail_activity"/>
+            <field name="state">code</field>
+            <field name="code">
+            for record in records:
+                record.action_feedback()
+            </field>
+        </record>
+        <record id="action_validate_planning_tree" model="ir.actions.server">
+            <field name="name">Planning</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="transit_invoice.model_folder_transit"/>
+            <field name="binding_model_id" ref="transit_invoice.model_folder_transit"/>
+            <field name="state">code</field>
+            <field name="code">
+            for record in records:
+                record.activity_scheduler()
+            </field>
+        </record>
+
+    </data>
+</odoo>

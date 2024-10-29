@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+          <template id="account_invoice_folder_simple_document">
+        <t t-call="web.external_layout">
+
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+         <div class="col-5 offset-7">
+            <span t-if="o.date_invoice">
+                <strong > Douala, le  </strong><span t-field="o.date_invoice"/>
+            </span>
+        </div>
+        <div class=" col-5">
+            <div t-if="o.transit_id.num_ot">
+                <strong>OT :</strong>
+                <span  t-field="o.transit_id.num_ot"/>
+            </div>
+            <div t-if="o.transit_id">
+                <strong>Dossier N° :</strong>
+                <span  t-field="o.name"/>
+            </div>
+        </div>
+        <div class="col-5 offset-7">
+
+            <div  style="border: 2px solid #000;">
+                <div t-if="o.partner_id">DOIT: <span t-field="o.partner_id"/></div>
+                <div t-if="o.partner_id.street"> BP: <span t-field="o.partner_id.street"/></div>
+                <div t-if="o.partner_id.phone"> Tel: <span t-field="o.partner_id.phone"/></div>
+                <div t-if="o.partner_id.nui"> N.U.I: <span t-field="o.partner_id.nui"/></div>
+                <div t-if="o.partner_id.rc"> RCCM: <span t-field="o.partner_id.rc"/></div>
+            </div>
+        </div>
+        <div t-if="o.number_d">
+            <strong>Facture</strong>
+            <span t-field="o.number_d"/>
+        </div >
+        <div>
+                 <table style="width:100%;margin:3mm auto 0;padding:0px;border: 2px solid #000;font-family: 'arial';font-size:small;">
+                    <thead>
+                        <tr >
+                            <th  style="border-right: 2px solid #000; padding: 4px;">Fournisseur</th>
+                            <th  style="border-right: 2px solid #000; padding: 4px;">Designation</th>
+                            <th  style="border-right: 2px solid #000; padding: 4px;">Numero de B/L</th>
+                            <th  style="border-right: 2px solid #000; padding: 4px;">Regime</th>
+                            <th  style="border-right: 2px solid #000; padding: 4px;">Poids Brut</th>
+                            <th  style="border-right: 2px solid #000; padding: 4px;">Unite de mesure</th>
+                            <th  style="border-right: 2px solid #000; padding: 4px;">Valeur en FCFA</th>
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_vendour_tbody">
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;" ><span t-field="o.transit_id.vendor_id"/></td>
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;"><span t-field="o.transit_id.goods"/></td>
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                            <span t-field="o.transit_id.num_brd"/>
+                        </td>
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;" ><span t-field="o.transit_id.regime"/></td>
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;"><span t-field="o.transit_id.total_weighty"/></td>
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                            <span t-field="o.transit_id.uom_total_id"/>
+                        </td>
+                        <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                            <span t-field="o.transit_id.amount_purchased"/>
+                        </td>
+                    </tbody>
+            </table>
+
+        <t t-set="display_tva" t-value="any([l.price_taxed for l in o.transit_id.debour_ids])"/>
+
+       <table style="width:100%;margin:3mm auto 0;padding:0px;border: 2px solid #000;font-family: 'arial';font-size:small;">
+
+            <thead>
+                <tr>
+                    <th style="border-right: 2px solid #000; padding: 4px; text-align: center;">Reference Facture</th>
+                    <th  style="border-right: 2px solid #000; padding: 4px; text-align: center;">Debours</th>
+                    <th  t-if="display_tva" style="border-right: 2px solid #000; padding: 4px; text-align: center;">Montant HT</th>
+                    <th   t-if="display_tva" style="border-right: 2px solid #000; padding: 4px; text-align: center;">TVA</th>
+                    <th  style="border-right: 2px solid #000; padding: 4px;">Montant</th>
+                </tr>
+            </thead>
+            <tbody class="invoice_debours_tbody">
+                <t t-set="total_mte" t-value="0.0"/>
+                <t t-set="total_tva" t-value="0.0"/>
+                <t t-set="total_qte" t-value="0.0"/>
+                <tr t-foreach="o.transit_id.debour_ids" t-as="d">
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;  text-align: center;" ><span t-field="d.ref_deb"/></td>
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;  text-align: center;"><span t-field="d.product_id"/></td>
+                    <t t-set="total_mte" t-value="d.product_qty+total_mte"/>
+                    <td  t-if="display_tva" style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;  text-align: center;"><span t-field="d.product_qty"/></td>
+                    <t t-set="total_tva" t-value="d.price_taxed+total_tva"/>
+                    <td  t-if="display_tva" style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;  text-align: center;"><span t-field="d.price_taxed"/></td>
+                    <t t-set="total_qte" t-value="d.amount_debour+total_qte"/>
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;  text-align: center;">
+                        <span t-field="d.amount_debour"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="col-md-2"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                        Total
+                    </td>
+                     <td t-if="display_tva" class="col-md-2" align="left"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                        <span t-esc="total_mte" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                     <td t-if="display_tva"  class="col-md-2" align="left"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                        <span t-esc="total_tva" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+
+                    <td class="col-md-2" align="left"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                        <span t-esc="total_qte" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+
+                </tr>
+            </tbody>
+            </table>
+
+            <!-- <span>Charges</span> -->
+               <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+                    <table style="width:100%;margin:3mm auto 0;padding:0px;border: 2px solid #000;font-family: 'arial';font-size:small;">
+
+                        <thead>
+                            <tr style="height:20px;">
+                                <th  style="border-right: 2px solid #000; padding: 4px;text-align: center;">Charges Variables</th>
+                                <th  style="border-right: 2px solid #000; padding: 4px;text-align: center;">Base</th>
+                                <th  style="border-right: 2px solid #000; padding: 4px; text-align: center;">Tarif</th>
+                                <th  style="border-right: 2px solid #000; padding: 4px; text-align: center;">Montant HT</th>
+                                <th style="border-right: 2px solid #000; padding: 4px; text-align: center;">TVA</th>
+                                 <th   t-if="display_discount" style="border-right: 2px solid #000; padding: 4px; text-align: center;">Remise (%)</th>
+                                <th  style="border-right: 2px solid #000; padding: 4px; text-align: center;">Montant TTC</th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_charge_tbody">
+                            <t t-set="total_ht" t-value="0.0"/>
+                            <t t-set="total_ttc" t-value="0.0"/>
+                            <t t-set="total_tva" t-value="0.0"/>
+                            <tr t-foreach="o.invoice_line_ids" t-as="l">
+                                <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;" ><span t-field="l.product_id"/></td>
+                                <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;"><span t-field="l.quantity"/></td>
+                                <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <t t-set="total_ht" t-value="l.price_subtotal+total_ht"/>
+                                <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-field="l.price_subtotal"/>
+                                </td>
+                                <t t-set="total_tva" t-value="l.price_tax+total_tva"/>
+                                <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-field="l.price_tax"/>
+                                </td>
+                                <td  t-if="display_discount" style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-field="l.discount"/>
+                                </td>
+                                <t t-set="total_ttc" t-value="l.price_total+total_ttc"/>
+                                <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-field="l.price_total"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="col-md-2" style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                                    TOTAL
+                                </td>
+                                <td class="col-md-2" align="left" style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-esc="total_ht" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                                <td class="col-md-2" style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-esc="total_tva" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                                <td t-if="display_discount"  class="col-md-2" align="left"  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                </td>
+                                <td class="col-md-2" align="left" style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px; text-align: center;">
+                                    <span t-esc="total_ttc" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+            <!-- <span class="text-center">Montant a Payer</span> -->
+
+
+            <table style="width:100%;margin:3mm auto 0;padding:0px;border: 2px solid #000;font-family: 'arial';font-size:small;">
+                <tr>
+                    <td><strong>Elements</strong></td>
+                    <td><strong>Debours</strong></td>
+                    <td><strong>Charges Variables</strong></td>
+                    <td><strong>Autres Charges</strong></td>
+                    <td><strong>Total</strong></td>
+                </tr>
+                <tr>
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;">
+                        Montant a Payer
+                    </td>
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;text-align: center;">
+                        <span t-field="o.amount_transit_debours" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;text-align: center;">
+                        <span t-esc="o.amount_transit_expense_variable" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;text-align: center;">
+                        <span t-esc="o.amount_transit_expense" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                    <td  style="border-right: 1px solid #000; border-top: 1px solid #000; padding: 4px;text-align: center;">
+                            <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                    </td>
+                </tr>
+            </table>
+
+            <p style="font-family: 'arial';font-size:large;">
+        		<strong style="text-decoration:underline;">Arrêter de la présente facture à la somme de </strong>
+        		<span t-esc="o.get_amount_letter()"/>
+    		</p>
+            <div class="text-right" style="font-family: 'arial';font-size:large; text-decoration:underline;">
+                <strong>
+                Pour LMC Sarl
+                </strong>
+            </div>
+        </div>
+    </t>
+
+    </template>
+
+    <template id="account_invoice_folder_simple">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="transit_invoice.account_invoice_folder_simple_document" />
+            </t>
+        </t>
+    </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="wizard_message_form_gec" model="ir.ui.view">
+            <field name="name">Message</field>
+            <field name="model">message.wizard.gec</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Message">
+                    <p class="text-center">
+                        <field name="message"/>
+                    </p>
+                    <footer>
+                        <button name="action_ok" type="object" string="Oui" default_focus="1"  class="oe_highlight"/>
+<!--                        <button name="action_no" type="object" string="Non"/>-->
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

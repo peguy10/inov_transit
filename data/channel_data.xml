@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <record model="mail.channel" id="channel_transit_lmc">-->
+<!--          <field name="public">private</field>-->
+<!--            <field name="name">Transit</field>-->
+<!--            <field name="group_ids" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="description">Channel  for Transit.</field>-->
+<!--        </record>-->
+<!--          <record model="mail.channel" id="channel_acconage">-->
+<!--          <field name="public">private</field>-->
+<!--            <field name="name">Aconnage</field>-->
+<!--            <field name="group_ids" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="description">Channel  for Acconage.</field>-->
+<!--        </record>-->
+<!--          <record model="mail.channel" id="channel_shipping">-->
+<!--          <field name="public">private</field>-->
+<!--            <field name="name">Shipping</field>-->
+<!--            <field name="group_ids" eval="[(4, ref('base.group_user'))]"/>-->
+<!--            <field name="description">Channel  for Shipping.</field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

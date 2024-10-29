@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="transit_debour_tree_view">
+            <field name="name">transit.debour.tree.view</field>
+            <field name="model">debour.transit</field>
+            <field name="arch" type="xml">
+                <tree string="Debour Line">
+                    <field name="transit_id"/>
+                    <field name="ref_deb"/>
+                    <field name="product_id"/>
+                    <field name="amount_debour" sum="Total Debour"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="transit_debour_form">
+            <field name="name">transit.debour.form.view</field>
+            <field name="model">debour.transit</field>
+            <field name="arch" type="xml">
+            <form string =" Debour Service">
+                    <sheet>
+                    <div class="oe_title">
+                        <label for="transit_id" />
+                        <h1>
+                            <field name="transit_id"   options="{'no_create': True, 'no_open': True}"/>
+                        </h1>
+                    </div>
+                <group >
+                    <group>
+                        <field name="ref_deb"/>
+                        <field name="product_id"/>
+                        <field name="product_qty"/>
+                        <field name="tax_id" widget="many2many_tags"/>
+                    </group>
+                   <group>
+                        <field name="price_taxed"/>
+                        <field name="amount_debour"/>
+                        <field name="user_id" invisible="1"/>
+                   </group>
+                    <group string="Pieces Jointes">
+                        <field name="attach_files_ids" widget="many2many_binary"/>
+                    </group>
+                </group>
+            </sheet>
+            </form>
+            </field>
+        </record>
+        <record id="view_transit_debour_filter" model="ir.ui.view">
+            <field name="name">transit.debour.filter.select</field>
+            <field name="model">debour.transit</field>
+            <field name="arch" type="xml">
+                <search string="Recherche Services">
+                    <field name="product_id" string="Services"/>
+                    <field name="transit_id" string="Dossiers"/>
+                    <separator/>
+                    <filter string="Mes Services" name="my_services"
+                        domain="[('user_id', '=', uid)]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="folder" string="Dossier" domain="[]" context="{'group_by':'transit_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        <record id="action_transit_debour" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">debour.transit</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_transit_debour_filter"/>
+            <field name="context">{'search_default_my_services':1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Suivi de prestation de services
+                </p><p>
+                </p>
+            </field>
+      </record>
+       <menuitem
+            name="Debours"
+            action="action_transit_debour"
+            id="menu_transit_debour_id" parent="transit_invoice.menu_payment_invoice_id" groups="transit_invoice.group_transit_account"
+            sequence="10" />
+
+
+<!--        <record id="transit_invoie_mail_search" model="ir.ui.view">-->
+<!--            <field name="name">transit.invoie.mail.activity.search</field>-->
+<!--            <field name="model">mail.activity</field>-->
+<!--            <field name="inherit_id" ref="mail.mail_activity_view_search"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--              <xpath expr="//field[@name='res_id']" position="before">-->
+<!--                    <field name="res_name"/>-->
+<!--              </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="mail_activity_transit_action" model="ir.actions.act_window">
+            <field name="name">Mes Taches</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mail.activity</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="mail.mail_activity_view_search"/>
+            <field name="context">{
+                'search_default_activities_my':1,
+                'default_stages':'transit'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                Suivi des Taches du Dossier Transit
+                </p><p>
+                </p>
+            </field>
+      </record>
+    <menuitem
+            name="Taches"
+            action="mail_activity_transit_action"
+            id="menu_activity_debour_id" parent="transit_invoice.menu_folder_id" groups="transit_invoice.group_transit_declarant"
+            sequence="7" />
+
+    </data>
+</odoo>
