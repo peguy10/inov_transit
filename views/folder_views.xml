@@ -2,7 +2,7 @@
 <odoo>
     <data>
 
-        <record id="act_res_partner_2_transit_invoice" model="ir.actions.act_window">
+        <record id="act_res_partner_2_inov_transit" model="ir.actions.act_window">
             <field name="name">Transit Debours</field>
             <field name="res_model">debour.transit</field>
             <field name="view_mode">tree,form</field>
@@ -64,14 +64,14 @@
                         <field name="number" invisible="1"/>
                         <field name="stages" invisible="1"/>
                         <button string="Changer d'Etape" type="object" name="action_validate_folder" class="oe_highlight"
-                                groups="transit_invoice.group_transit_user,transit_invoice.group_acconage_manager,transit_invoice.group_shipping_manager"/>
+                                groups="inov_transit.group_transit_user,inov_transit.group_acconage_manager,inov_transit.group_shipping_manager"/>
                         <button string="Planifier" type="object" name="activity_scheduler"
-                                groups="transit_invoice.group_transit_manager,transit_invoice.group_acconage_manager,transit_invoice.group_shipping_manager"/>
+                                groups="inov_transit.group_transit_manager,inov_transit.group_acconage_manager,inov_transit.group_shipping_manager"/>
                         <field class="badge badge-warning" name="stage_id" domain="[('stages', '=', stages)]" readonly="1"/>
                     </header>
 
                     <div class="alert alert-danger" role="alert" style="margin-bottom:0px;"
-                         groups="transit_invoice.group_transit_user"
+                         groups="inov_transit.group_transit_user"
                          invisible="['|', ('alerte', 'in', ('danger', 'open')), ('stages', 'in', ('ship', 'accone'))]">
                         <strong><a class="alert-link" href="#outstanding" role="button">Alerte ETA</a></strong> Ce Dossier doit être traité d'urgence.
                     </div>
@@ -85,7 +85,7 @@
 
 
                     <div class="alert alert-warning" role="alert" style="margin-bottom:0px;"
-                         groups="transit_invoice.group_transit_user"
+                         groups="inov_transit.group_transit_user"
                          invisible="['|', ('alerte', 'in', ('overdue', 'open')), ('stages', 'in', ('ship', 'accone'))]">
                         <strong><a class="alert-link" href="#outstanding" role="button">Alerte ETA</a></strong> Il ne vous reste que 03 jours pour traiter ce Dossier.
                     </div>
@@ -103,7 +103,7 @@
                             </h1>
                         </div>
 
-                        <group name="folder_transit" groups="transit_invoice.group_transit_user" invisible="stages != 'transit'">
+                        <group name="folder_transit" groups="inov_transit.group_transit_user" invisible="stages != 'transit'">
                             <group string="Type de Dossier">
                                 <field name="type_op" widget="radio"/>
                             </group>
@@ -374,7 +374,7 @@
       <menuitem
             name="Dedouanement"
             action="action_transit_folder"
-            id="menu_transit_folder" parent="transit_invoice.menu_folder_id" groups="transit_invoice.group_transit_manager,transit_invoice.group_transit_user"
+            id="menu_transit_folder" parent="inov_transit.menu_folder_id" groups="inov_transit.group_transit_manager,inov_transit.group_transit_user"
             sequence="15" />
 
       <record id="action_acconage_folder" model="ir.actions.act_window">
@@ -401,7 +401,7 @@
       <!-- <menuitem
             name="Acconage"
             action="action_acconage_folder"
-            id="menu_acconage_folder" parent="transit_invoice.menu_folder_id" groups="transit_invoice.group_acconage_manager,transit_invoice.group_acconage_user"
+            id="menu_acconage_folder" parent="inov_transit.menu_folder_id" groups="inov_transit.group_acconage_manager,inov_transit.group_acconage_user"
             sequence="17" /> -->
 
 
@@ -425,7 +425,7 @@
       <menuitem
             name="All Folders"
             action="action_all_folder"
-            id="menu_all_folder" parent="transit_invoice.menu_folder_id" groups="base.group_no_one"
+            id="menu_all_folder" parent="inov_transit.menu_folder_id" groups="base.group_no_one"
             sequence="50" />
 
       <record id="service_expense_product" model="ir.actions.act_window">
@@ -443,7 +443,7 @@
       <menuitem
             name="Services"
             action="service_expense_product"
-            id="menu_transit_service_expense_id" parent="transit_invoice.menu_service_id" groups="transit_invoice.group_transit_account"
+            id="menu_transit_service_expense_id" parent="inov_transit.menu_service_id" groups="inov_transit.group_transit_account"
             sequence="10" />
 
       <record id="package_transit_form" model="ir.ui.view">
@@ -481,7 +481,7 @@
    <menuitem
             name="Conteneur"
             action="package_transit_action"
-            id="menu_package_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_package_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="40" />
 
   <record id="consignee_transit_form" model="ir.ui.view">
@@ -519,7 +519,7 @@
    <menuitem
             name="Armateur"
             action="consignee_transit_action"
-            id="menu_consignee_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_consignee_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="50" />
 
    <record id="import_transit_form" model="ir.ui.view">
@@ -557,7 +557,7 @@
    <menuitem
             name="Importateur"
             action="import_transit_action"
-            id="menu_import_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_import_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="60" />
 
    <record id="exportator_transit_form" model="ir.ui.view">
@@ -595,7 +595,7 @@
    <menuitem
             name="Exportateur"
             action="exportator_transit_action"
-            id="menu_exportateur_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_exportateur_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="70" />
 
   <record id="port_transit_form" model="ir.ui.view">
@@ -633,7 +633,7 @@
    <menuitem
             name="Port"
             action="port_transit_action"
-            id="menu_port_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_port_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="80" />
 
      <record id="incoterms_transit_form" model="ir.ui.view">
@@ -673,7 +673,7 @@
    <menuitem
             name="Incoterm"
             action="Incoterms_transit_action"
-            id="menu_incoterm_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_incoterm_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="90" />
 
 
@@ -743,7 +743,7 @@
    <menuitem
             name="Navire"
             action="vessel_transit_action"
-            id="menu_vessel_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_vessel_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="95" />
 
 
@@ -760,7 +760,7 @@
     <menuitem
             name="Tableau de Suivi Dossier Dedouanement"
             action="action_activity_transit_form"
-            id="menu_dashboard_transit_id" parent="transit_invoice.menu_dashboard_id" groups="transit_invoice.group_transit_manager"
+            id="menu_dashboard_transit_id" parent="inov_transit.menu_dashboard_id" groups="inov_transit.group_transit_manager"
             sequence="10" />
 
   <record id="mail_activity_type_transit_action" model="ir.actions.act_window">
@@ -775,7 +775,7 @@
   <menuitem
             name="Etapes Dedouanement"
             action="mail_activity_type_transit_action"
-            id="menu_activity_type_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_activity_type_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="100" />
     </data>
 </odoo>

@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form[@class='oe_form_configuration']" position="inside">
-                    <div class="app_settings_block" data-string="Transit" string="Transit" data-key="transit_invoice">
+                    <div class="app_settings_block" data-string="Transit" string="Transit" data-key="inov_transit">
                        <h2>Installation du Module Shipping</h2>
 <!--                        <div class="row mt16 o_settings_container" id="shipping_settings">-->
 <!--                            <div class="col-12 col-lg-6 o_setting_box" id="shipping_module_id">-->
@@ -48,10 +48,10 @@
             <field name="res_model">res.config.settings</field>
             <field name="view_mode">form</field>
             <field name="target">inline</field>
-            <field name="context">{'module' : 'transit_invoice'}</field>
+            <field name="context">{'module' : 'inov_transit'}</field>
         </record>
 
-        <menuitem id="menu_transit_config" name="Settings" parent="transit_invoice.menu_configuration_id"
+        <menuitem id="menu_transit_config" name="Settings" parent="inov_transit.menu_configuration_id"
             sequence="0" action="action_transit_config" groups="base.group_system"/>
 
     </data>

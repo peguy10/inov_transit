@@ -78,7 +78,7 @@
        <menuitem
             name="Debours"
             action="action_transit_debour"
-            id="menu_transit_debour_id" parent="transit_invoice.menu_payment_invoice_id" groups="transit_invoice.group_transit_account"
+            id="menu_transit_debour_id" parent="inov_transit.menu_payment_invoice_id" groups="inov_transit.group_transit_account"
             sequence="10" />
 
 
@@ -112,7 +112,7 @@
     <menuitem
             name="Taches"
             action="mail_activity_transit_action"
-            id="menu_activity_debour_id" parent="transit_invoice.menu_folder_id" groups="transit_invoice.group_transit_declarant"
+            id="menu_activity_debour_id" parent="inov_transit.menu_folder_id" groups="inov_transit.group_transit_declarant"
             sequence="7" />
 
     </data>

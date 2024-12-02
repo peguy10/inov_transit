@@ -2,7 +2,7 @@
 <odoo>
     <data>
           <!-- INVOICE TRANSIT -->
-        <record model="ir.ui.view" id="transit_invoice_tree_view">
+        <record model="ir.ui.view" id="inov_transit_tree_view">
             <field name="name">invoice.transit.tree.view</field>
             <field name="model">invoice.transit</field>
             <field name="arch" type="xml">
@@ -85,7 +85,7 @@
                 </form>
             </field>
         </record>
-         <record id="view_transit_invoice_report_pivot" model="ir.ui.view">
+         <record id="view_inov_transit_report_pivot" model="ir.ui.view">
          <field name="name">transit.invoice.report.pivot</field>
          <field name="model">invoice.transit</field>
          <field name="arch" type="xml">
@@ -110,7 +110,7 @@
                 </graph>
             </field>
         </record> -->
-        <record id="view_transit_invoice_filter" model="ir.ui.view">
+        <record id="view_inov_transit_filter" model="ir.ui.view">
         <field name="name">invoice.transit.search</field>
         <field name="model">invoice.transit</field>
             <field name="arch" type="xml">
@@ -125,12 +125,12 @@
             </field>
         </record>
 
-        <record id="action_transit_invoice" model="ir.actions.act_window">
+        <record id="action_inov_transit" model="ir.actions.act_window">
         <field name="name">Invoice Transit</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">invoice.transit</field>
         <field name="view_mode">tree,form,pivot,graph</field>
-        <field name="search_view_id" ref="view_transit_invoice_filter"/>
+        <field name="search_view_id" ref="view_inov_transit_filter"/>
         <field name="context">{}</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
@@ -143,8 +143,8 @@
 
       <!-- <menuitem
             name="Declaration Provisoire"
-            action="action_transit_invoice"
-            id="menu_transit_invoice_id" parent="transit_invoice.menu_service_id" groups="transit_invoice.group_transit_declarant"
+            action="action_inov_transit"
+            id="menu_inov_transit_id" parent="inov_transit.menu_service_id" groups="inov_transit.group_transit_declarant"
             sequence="0" /> -->
 
         <!-- Add you code here -->
@@ -210,7 +210,7 @@
         <menuitem
             name="Prestation"
             action="action_transit_prestation"
-            id="menu_transit_prestation_id" parent="transit_invoice.menu_configuration_id" groups="transit_invoice.group_transit_manager"
+            id="menu_transit_prestation_id" parent="inov_transit.menu_configuration_id" groups="inov_transit.group_transit_manager"
             sequence="11" />
 
         <record model="ir.ui.view" id="transit_order_tree_view">
@@ -286,7 +286,7 @@
                 <field name="model_transit_id"/>
             </xpath>
             <xpath expr="//button[@name='action_close_dialog']" position="attributes">
-                <attribute name="groups">transit_invoice.group_transit_manager,transit_invoice.group_acconage_manager,transit_invoice.group_shipping_manager</attribute>
+                <attribute name="groups">inov_transit.group_transit_manager,inov_transit.group_acconage_manager,inov_transit.group_shipping_manager</attribute>
             </xpath>
             <xpath expr="//button[@name='action_done_schedule_next']" position="attributes">
                 <attribute name="groups">base.group_no_one</attribute>
@@ -331,8 +331,8 @@
         <record id="action_validate_planning_tree" model="ir.actions.server">
             <field name="name">Planning</field>
             <field name="type">ir.actions.server</field>
-            <field name="model_id" ref="transit_invoice.model_folder_transit"/>
-            <field name="binding_model_id" ref="transit_invoice.model_folder_transit"/>
+            <field name="model_id" ref="inov_transit.model_folder_transit"/>
+            <field name="binding_model_id" ref="inov_transit.model_folder_transit"/>
             <field name="state">code</field>
             <field name="code">
             for record in records:

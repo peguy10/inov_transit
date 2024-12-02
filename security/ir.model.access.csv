@@ -16,6 +16,6 @@ access_stage_transit_wizard,stage_transit_wizard,model_stage_transit_wizard,,1,1
 access_message_wizard_gec,message_wizard_gec,model_message_wizard_gec,,1,1,1,1
 access_vessel_transit,vessel_transit,model_vessel_transit,,1,1,1,1
 access_package_folders,package_folders,model_package_folders,,1,1,1,1
-access_mail_activity_type,mail_activity_type,model_mail_activity_type,transit_invoice.group_transit_manager,1,1,1,1
-access_mail_activity_type,mail_activity_type,model_mail_activity_type,transit_invoice.group_shipping_manager,1,1,1,1
-access_mail_activity_type,mail_activity_type,model_mail_activity_type,transit_invoice.group_acconage_manager,1,1,1,1
+access_mail_activity_type,mail_activity_type,model_mail_activity_type,inov_transit.group_transit_manager,1,1,1,1
+access_mail_activity_type,mail_activity_type,model_mail_activity_type,inov_transit.group_shipping_manager,1,1,1,1
+access_mail_activity_type,mail_activity_type,model_mail_activity_type,inov_transit.group_acconage_manager,1,1,1,1

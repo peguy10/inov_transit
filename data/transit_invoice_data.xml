@@ -28,14 +28,14 @@
 
         <record id="view_prestation_transit_fixed" model="prestation.transit">
             <field name="name">Commission sur Debour</field>
-            <field name="product_id" ref="transit_invoice.product_product_variable_cost"/>
+            <field name="product_id" ref="inov_transit.product_product_variable_cost"/>
             <field name="type_service">fixed</field>
             <field name="caution">0.0</field>
             <field name="taux">1.5</field>
         </record>
         <record id="view_prestation_transit_changed" model="prestation.transit">
             <field name="name">Honoraire</field>
-            <field name="product_id" ref="transit_invoice.product_product_fixed_cost"/>
+            <field name="product_id" ref="inov_transit.product_product_fixed_cost"/>
             <field name="type_service">changed</field>
             <field name="caution">245000.0</field>
             <field name="taux">0.5</field>

@@ -127,7 +127,7 @@
     <template id="account_invoice_folder_placam">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
-                <t t-call="transit_invoice.account_invoices_folder_transit_placam_document" />
+                <t t-call="inov_transit.account_invoices_folder_transit_placam_document" />
             </t>
         </t>
     </template>
